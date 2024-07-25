@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import com.facebook.common.logging.FLog;
 import com.facebook.react.R;
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -112,7 +113,7 @@ public class AndroidInfoHelpers {
 
       String lastLine = "";
       String line;
-      while ((line = reader.readLine()) != null) {
+      while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
         lastLine = line;
       }
       metroHostPropValue = lastLine;
