@@ -53,6 +53,8 @@ import com.facebook.react.devsupport.interfaces.StackFrame;
 import com.facebook.react.modules.core.RCTNativeAppEventEmitter;
 import com.facebook.react.packagerconnection.RequestHandler;
 import com.facebook.react.packagerconnection.Responder;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -704,7 +706,7 @@ public abstract class DevSupportManagerBase implements DevSupportManager {
 
     if (mCurrentContext != null) {
       try {
-        URL sourceUrl = new URL(getSourceUrl());
+        URL sourceUrl = Urls.create(getSourceUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         String path = sourceUrl.getPath().substring(1); // strip initial slash in path
         String host = sourceUrl.getHost();
         int port = sourceUrl.getPort();
